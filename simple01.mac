@@ -1,0 +1,17 @@
+//homework;
+//write a programme which loads two numbers,
+//subtracts sec from first and jumps if total is negative
+//otherwise jumps back to add
+
+
+0011 1111 00000000 STORE_V ; store 15 70
+0011 1110 00000000 STORE_V ; store 14 11
+0001 0000 LOAD ; load 15 into register A
+0001 0000 LOAD ; load 14 into register B
+0101 0000 SUBTRACT ; sub B from A and store in reg A
+0010 0000 00000000 STORE_R ;  store in reg A
+0010 1111 00000000 STORE_V ; store A to 15
+1001 0101 JUMPNEG ;
+1000 0010 JUMP ;
+1110 0000 OUT
+1111 0000 HALT
