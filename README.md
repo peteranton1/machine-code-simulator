@@ -1,7 +1,16 @@
-# machine-code-simulator
+<h1>machine-code-simulator</h1>
+====
+
 A simulator for writing machine code or assembler programs.
 
-###The Architecture
+<h2>How to Run</h2>
+
+1. Clone or download the repository
+2. mvn clean install
+3. MCS.cmd
+
+
+<h2>The Architecture</h2>
 
 The machine described is a hypothetical computer
 which has two registers, A and B, and 16 bytes of 
@@ -11,7 +20,7 @@ code, which is described in the Instruction Set below.
 ![Image](doc/memory.png "icon")
 
 
-###The Instruction Set
+<h2>The Instruction Set</h2>
 
 ![Image](doc/instructions.png "icon")
 
@@ -23,7 +32,7 @@ at the beginning of the line, one can write a program in
 machine code. This program can then be loaded and 
 run using this simulator.
 
-###The OpCodes
+<h2>The OpCodes</h2>
 
 0. 0000 0000 NOOP         ; No operation
 1. 0001 0000 LOAD_A       ; Read RAM location into Register A
