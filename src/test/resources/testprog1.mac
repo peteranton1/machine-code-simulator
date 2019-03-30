@@ -1,11 +1,11 @@
-0000 0000 NOOP
-0001 0000 LOAD
-0010 0000 STORE
-0100 0000 ADD
-0101 0000 SUBTRACT
-0110 0000 MULTIPLY
-0111 0000 DIVIDE
-1100 0000 JUMP
-1101 0000 JUMPIFNEG
-1110 0000 JUMPIFOVER
-1111 0000 HALT
+0000 0000 NOOP         ; No operation
+0001 0000 LOAD_A       ; Read RAM location into Register A
+0010 0000 LOAD_B       ; Read RAM location into Register B
+0100 0000 ADD          ; Add two registers, store to second register.
+0101 0000 SUB          ; Subtract two registers, store to second register.
+0110 0000 MULT         ; Multiply two registers, store to second register.
+0111 0000 DIV          ; Divide two registers, store to second register.
+1100 0000 JUMP         ; Jump program to new RAM location.
+1101 0000 JUMP_NEG     ; Jump program if A register negative.
+1110 0000 JUMP_OVER    ; Jump program if A register overflowed.
+1111 0000 HALT         ; Stop program.

@@ -1,16 +1,13 @@
 package com.anton.machine;
 
+import com.anton.machine.commands.Helper;
+import com.anton.machine.commands.Loader;
+import com.anton.machine.commands.Memory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Interprets a line of machine codee
@@ -21,9 +18,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class Interpreter {
-
-    @Builder.Default
-    private List<Loader.Line> lines = new ArrayList<>();
 
     /**
      * Interpret a line of machine code and execute it.
@@ -38,7 +32,11 @@ public class Interpreter {
     }
 
     public void load(String filename){
-        this.lines = Loader.INSTANCE.load(filename);
+        Memory.INSTANCE.reset(Loader.INSTANCE.load(filename));
+    }
+
+    public void memory(){
+        Memory.INSTANCE.memory();
     }
 
     public void run() {
@@ -46,16 +44,7 @@ public class Interpreter {
     }
 
     public void help(){
-        final String help = "\nMachine Code Simulator\n" +
-                "=======================\n" +
-                "Commands:\n" +
-                "    help                - Display this message\n" +
-                "    load <filename>     - Load a file containing machine instructions.\n" +
-                "    list                - Display the program currently loaded.     \n" +
-                "    memory              - Show the memory model of the simulation. \n" +
-                "    run                 - Run the loaded program. \n" +
-                "    step                - Step through the program one line at a time\n";
-        log.info(help);
+        Helper.INSTANCE.help();
     }
 }
 
