@@ -1,32 +1,20 @@
 ; Instructions in machine code
-0000 0000 NOOP       ; No operation
-0001 0000 LOAD_A     ; Read RAM location into Register A
-0010 0000 LOAD_B     ; Read RAM location into Register B
-0011 0000 STORE_A    ; Write register A into RAM location
-0100 0000 LOAD_AI    ; Load a 4 bit value into Register A
-0101 0000 SHIFT_AI   ; Shift Register A 4 bits then add another 4 bit value
-0110 0000 ADD        ; Add two registers, store to second register.
-0111 0000 SUB        ; Subtract two registers, store to second register.
-1001 0000 MULT       ; Multiply two registers, store to second register.
-1010 0000 DIV        ; Divide two registers, store to second register.
-1011 0000 RESERVED   ; Reserved for future use.
-1100 0000 JUMP       ; Jump program to new RAM location.
-1101 0000 JUMP_NEG   ; Jump program if A register negative.
-1110 0000 JUMP_OVER  ; Jump program if A register overflowed.
+0100 1010 LOAD_AI    ; Load a 4 bit value 1010 into Register A
+0011 1110 STORE_A    ; Write register A into RAM location 14
+0101 1010 SHIFT_AI   ; Shift Register A 4 bits then add another 4 bit value 1010
+0011 1111 STORE_A    ; Write register A into RAM location 15
+0010 1110 LOAD_B     ; Read RAM location 14 into Register B
+0111 0100 SUB        ; Subtract two registers, store to second register.
+1101 1000 JUMP_NEG   ; Jump program if A register negative to RAM location 8.
+1100 0101 JUMP       ; Jump program to RAM location 5.
 1111 0000 HALT       ; Stop program.
 ; Instructions in Assembler
-NOOP 0000           ; No operation
-LOAD_A 0000         ; Read RAM location into Register A
-LOAD_B 0000         ; Read RAM location into Register B
-STORE_A 0000        ; Write register A into RAM location
-LOAD_AI 0000        ; Load a 4 bit value into Register A
-SHIFT_AI 0000       ; Shift Register A 4 bits then add another 4 bit value
-ADD 0000 ADD        ; Add two registers, store to second register.
-SUB 0000 SUB        ; Subtract two registers, store to second register.
-MULT 0000           ; Multiply two registers, store to second register.
-DIV 0000            ; Divide two registers, store to second register.
-RESERVED 0000       ; Reserved for future use.
-JUMP 0000           ; Jump program to new RAM location.
-JUMP_NEG 0000       ; Jump program if A register negative.
-JUMP_OVER 0000      ; Jump program if A register overflowed.
-HALT 0000           ; Stop program.
+LOAD_AI 1010     ; Load a 4 bit value 1010 into Register A
+STORE_A 1110     ; Write register A into RAM location 14
+SHIFT_AI 1010    ; Shift Register A 4 bits then add another 4 bit value 1010
+STORE_A 1111     ; Write register A into RAM location 15
+LOAD_B 1110      ; Read RAM location 14 into Register B
+SUB 0100         ; Subtract two registers, store to second register.
+JUMP_NEG 1000    ; Jump program if A register negative to RAM location 8.
+JUMP 0101        ; Jump program to RAM location 5.
+HALT 0000        ; Stop program.
