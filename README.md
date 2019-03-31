@@ -57,6 +57,7 @@ both types of program is shown below.
 * 1111 0000 HALT       ; Stop program.
 
 <h2>Example Machine Code program</h2>
+
 * 0100 1010 LOAD_AI    ; Load a 4 bit value 1010 into Register A
 * 0011 1110 STORE_A    ; Write register A into RAM location 14
 * 0101 1010 SHIFT_AI   ; Shift Register A 4 bits then add another 4 bit value 1010
@@ -68,6 +69,7 @@ both types of program is shown below.
 * 1111 0000 HALT       ; Stop program.
 
 <h2>Example Assembler program</h2>
+
 * LOAD_AI 1010     ; Load a 4 bit value 1010 into Register A
 * STORE_A 1110     ; Write register A into RAM location 14
 * SHIFT_AI 1010    ; Shift Register A 4 bits then add another 4 bit value 1010
