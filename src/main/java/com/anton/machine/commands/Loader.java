@@ -37,7 +37,9 @@ public enum Loader {
     }
 
     public Line parseLine(String inputLine) {
-        if (inputLine == null || inputLine.charAt(0) == ';') {
+        if (inputLine == null ||
+                inputLine.trim().length() == 0 ||
+                inputLine.trim().charAt(0) == ';') {
             return null;
         }
         String[] tokens = inputLine.split(" ");
