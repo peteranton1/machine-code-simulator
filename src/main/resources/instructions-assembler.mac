@@ -1,0 +1,16 @@
+; Instructions in Assembler
+NOOP 0000           ; No operation
+LOAD_A 0000         ; Read RAM location into Register A
+LOAD_B 0000         ; Read RAM location into Register B
+STORE_A 0000        ; Write register A into RAM location
+LOAD_AI 0000        ; Load a 4 bit value into Register A
+SHIFT_AI 0000       ; Shift Register A 4 bits then add another 4 bit value
+ADD 0000 ADD        ; Add two registers, store to second register.
+SUB 0000 SUB        ; Subtract two registers, store to second register.
+MULT 0000           ; Multiply two registers, store to second register.
+DIV 0000            ; Divide two registers, store to second register.
+RESERVED 0000       ; Reserved for future use.
+JUMP 0000           ; Jump program to new RAM location.
+JUMP_NEG 0000       ; Jump program if A register negative.
+JUMP_OVER 0000      ; Jump program if A register overflowed.
+HALT 0000           ; Stop program.

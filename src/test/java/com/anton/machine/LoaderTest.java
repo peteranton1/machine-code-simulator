@@ -47,11 +47,11 @@ public class LoaderTest {
 
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < inputLines.size(); i++) {
-            buf.append(String.format("%2s: %s %s %s\n",
-                    i,
+            buf.append(String.format("%s %s %-10s %s\n",
                     outputLines.get(i).getInstruction().getNibble(),
                     "0000",
-                    outputLines.get(i).getInstruction().name()
+                    outputLines.get(i).getInstruction().name(),
+                    outputLines.get(i).getInstruction().getComment()
             ));
             //Assert.assertThat(outputLines.get(i).getInstruction(), is(instructions.get(i)));
         }
