@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -37,15 +36,20 @@ public enum Loader {
         return Collections.emptyList();
     }
 
-    public Line parseLine(String inputLine){
+    public Line parseLine(String inputLine) {
+        if (inputLine == null ||
+                inputLine.trim().length() == 0 ||
+                inputLine.trim().charAt(0) == ';') {
+            return null;
+        }
         String[] tokens = inputLine.split(" ");
-        if(tokens.length >= 2){
+        if (tokens.length >= 2) {
             return Line.builder()
                     .instruction(Instruction.parse(tokens[0]))
                     .address(Address.parse(tokens[1]))
                     .inputLine(inputLine)
                     .build();
-        }else{
+        } else {
             return Line.builder()
                     .instruction(Instruction.NOOP)
                     .address(Address.A0000)

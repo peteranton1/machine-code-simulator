@@ -1,0 +1,16 @@
+; Instructions in machine code
+0000 0000 NOOP       ; No operation
+0001 0000 LOAD_A     ; Read RAM location into Register A
+0010 0000 LOAD_B     ; Read RAM location into Register B
+0011 0000 STORE_A    ; Write register A into RAM location
+0100 0000 LOAD_AI    ; Load a 4 bit value into Register A
+0101 0000 SHIFT_AI   ; Shift Register A 4 bits then add another 4 bit value
+0110 0000 ADD        ; Add two registers, store to second register.
+0111 0000 SUB        ; Subtract two registers, store to second register.
+1001 0000 MULT       ; Multiply two registers, store to second register.
+1010 0000 DIV        ; Divide two registers, store to second register.
+1011 0000 RESERVED   ; Reserved for future use.
+1100 0000 JUMP       ; Jump program to new RAM location.
+1101 0000 JUMP_NEG   ; Jump program if A register negative.
+1110 0000 JUMP_OVER  ; Jump program if A register overflowed.
+1111 0000 HALT       ; Stop program.

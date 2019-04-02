@@ -20,16 +20,18 @@ public class LoaderTest {
     public void shouldParseFileOk() {
         String filename = "src/test/resources/testprog1.mac";
         List<Line> lines = Loader.INSTANCE.load(filename);
-
+        System.out.println(String.format("%s: %s", "Loading program", filename));
+        System.out.println("--------------");
         lines.forEach(
                 line -> {
                     System.out.println(String.format("%4s %4s %-12s %s",
                             line.getInstruction().getNibble(),
                             line.getAddress().getNibble(),
-                            line.getInstruction().name(),
+                            line.getInstruction().getMneumonic(),
                             line.getInstruction().getComment()
                             ));
                 });
+        System.out.println("--------------");
     }
 
     @Test
@@ -47,11 +49,11 @@ public class LoaderTest {
 
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < inputLines.size(); i++) {
-            buf.append(String.format("%2s: %s %s %s\n",
-                    i,
+            buf.append(String.format("%s %s %-10s %s\n",
                     outputLines.get(i).getInstruction().getNibble(),
                     "0000",
-                    outputLines.get(i).getInstruction().name()
+                    outputLines.get(i).getInstruction().name(),
+                    outputLines.get(i).getInstruction().getComment()
             ));
             //Assert.assertThat(outputLines.get(i).getInstruction(), is(instructions.get(i)));
         }
