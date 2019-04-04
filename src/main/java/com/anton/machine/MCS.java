@@ -1,5 +1,6 @@
 package com.anton.machine;
 
+import com.anton.machine.commands.CommandPrompt;
 import com.anton.machine.commands.Helper;
 import com.anton.machine.commands.Loader;
 import com.anton.machine.commands.Memory;
@@ -15,6 +16,8 @@ public class MCS {
             Memory.INSTANCE.memory();
         }else{
             Helper.INSTANCE.help();
+            // load src/test/resources/testprog1.mac
+            CommandPrompt.INSTANCE.commandPrompt();
         }
     }
 }

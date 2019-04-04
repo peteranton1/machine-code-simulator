@@ -21,12 +21,11 @@ public enum Helper {
     INSTANCE;
 
     public void help(){
-        final String help = "\nMachine Code Simulator\n" +
+        final String help = "Machine Code Simulator 1.0\n" +
                 "=======================\n" +
                 "Commands:\n" +
                 "    help                - Display this message\n" +
                 "    load <filename>     - Load a file containing machine instructions.\n" +
-                "    list                - Display the program currently loaded.     \n" +
                 "    memory              - Show the memory model of the simulation. \n" +
                 "    run                 - Run the loaded program. \n" +
                 "    step                - Step through the program one line at a time\n";

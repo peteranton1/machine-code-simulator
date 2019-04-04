@@ -6,6 +6,7 @@ import com.anton.machine.model.Line;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,9 +32,11 @@ public enum Loader {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            log.error("Error loading " + filename + ": " + e.getMessage());
+            log.error("Current folder is: " +
+                    new File(".").getAbsolutePath());
+            throw new PromptException("Error loading " + filename + ": " + e);
         }
-        return Collections.emptyList();
+        //return Collections.emptyList();
     }
 
     public Line parseLine(String inputLine) {
