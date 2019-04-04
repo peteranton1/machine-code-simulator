@@ -28,7 +28,7 @@ public class LoaderTest {
                             line.getInstruction().getNibble(),
                             line.getAddress().getNibble(),
                             line.getInstruction().getMneumonic(),
-                            line.getInstruction().getComment()
+                            String.format(line.getInstruction().getComment(),line.getAddress().getNibble())
                             ));
                 });
         System.out.println("--------------");
@@ -61,6 +61,6 @@ public class LoaderTest {
     }
 
     private String getInstructionString(Instruction instruction) {
-        return instruction.getNibble() + " 0000 " + instruction.name() + " ";
+        return instruction.getNibble() + " 0000 " + instruction.name() + " " + instruction.getComment();
     }
 }
