@@ -7,8 +7,6 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @Slf4j
 public class RamWordTest {
 
@@ -29,8 +27,8 @@ public class RamWordTest {
         RamWord ramWord = new RamWord();
 
         inputBits.forEach(expected -> {
-            ramWord.setBinary(expected);
-            String actual = ramWord.getBinary();
+            ramWord.loadValue(expected);
+            String actual = ramWord.readValue();
             Assert.assertEquals(expected.trim(),actual.trim());
             log.debug("Ok -> " + actual);
         });
@@ -48,14 +46,14 @@ public class RamWordTest {
         Assert.assertFalse(ramWord.isOverflow());
 
         for(String expected : inputBits) {
-            ramWord.setBinary(expected);
-            String actual = ramWord.getBinary();
+            ramWord.loadValue(expected);
+            String actual = ramWord.readValue();
             Assert.assertTrue(ramWord.isOverflow());
             log.debug("Ok -> " + actual);
         }
         String expected = "1010101";
-        ramWord.setBinary(expected);
-        String actual = ramWord.getBinary();
+        ramWord.loadValue(expected);
+        String actual = ramWord.readValue();
         Assert.assertFalse(ramWord.isOverflow());
         log.debug("Ok -> " + actual);
 

@@ -1,6 +1,5 @@
 package com.anton.machine.commands;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -10,9 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RamWord {
 
-    private static final char BIN_ONE = '1';
-    private static final char BIN_ZERO = '0';
-
+    private int address = -1;
     private int value = 0;
 
     /**
@@ -20,8 +17,33 @@ public class RamWord {
      *
      * @return decimal.
      */
-    public int getValue(){
+    public int getAddress() {
+        return address;
+    }
+    /**
+     * Get the address as decimal.
+     *
+     * @return decimal.
+     */
+    public int getValue() {
         return value;
+    }
+
+    /**
+     * Get the address as binary string.
+     *
+     * @return binary string of expected length.
+     */
+    public String readAddress() {
+        return RamUtils.INSTANCE.intToString(address);
+    }
+
+    /**
+     * Load the address as a binary string.
+     * @param binaryString address to load.
+     */
+    public void loadAddress(String binaryString) {
+        address = RamUtils.INSTANCE.stringToInt(binaryString);
     }
 
     /**
@@ -29,55 +51,72 @@ public class RamWord {
      *
      * @return binary string of expected length.
      */
-    public String getBinary(){
-        StringBuilder buf = new StringBuilder();
-        int wordLength = Config.INSTANCE.getWordLength();
-        Integer integer = value;
-        buf.append(Integer.toBinaryString(value));
-        while(buf.length() < wordLength){
-            buf.insert(0,"0");
-        }
-        while(buf.length() > wordLength){
-            buf.delete(0,1);
-        }
-        return buf.toString();
+    public String readValue() {
+        return RamUtils.INSTANCE.intToString(value);
     }
 
     /**
-     * Set the value from a binary string.
-     *
-     * @param binaryString value to set.
+     * Load the value as a binary string.
+     * @param binaryString value to load.
      */
-    public void setBinary(String binaryString) {
-        try {
-            if (binaryString != null) {
-                char[] chars = binaryString.toCharArray();
-                int result = 0;
-                for(char c: chars) {
-                    // check each binary digit
-                    if (c == BIN_ONE || c == BIN_ZERO) {
-                        // shift result by power of two
-                        result *= 2;
-                        // Add one bit in lowest position
-                        if (c == '1') {
-                            result += 1;
-                        }
-                    }
-                }
-                value = result;
-            }
-        } catch (Throwable t) {
-            log.debug("Error interpretting: '" + binaryString +
-                    "', err=" + t.toString());
-        }
+    public void loadValue(String binaryString) {
+        value = RamUtils.INSTANCE.stringToInt(binaryString);
     }
 
+    /**
+     * adds the value of the binary string to the member
+     * variable called value.
+     *
+     * @param binaryString the value as a binary string.
+     */
+    public void add(String binaryString) {
+        this.value += RamUtils.INSTANCE.stringToInt(binaryString);
+    }
+
+    /**
+     * subtract the value of the binary string to the member
+     * variable called value.
+     *
+     * @param binaryString the value as a binary string.
+     */
+    public void subtract(String binaryString) {
+        this.value -= RamUtils.INSTANCE.stringToInt(binaryString);
+    }
+    /**
+     * multiply the value of the binary string to the member
+     * variable called value.
+     *
+     * @param binaryString the value as a binary string.
+     */
+    public void multiply(String binaryString) {
+        this.value *= RamUtils.INSTANCE.stringToInt(binaryString);
+    }
+    /**
+     * divides the value of the binary string to the member
+     * variable called value.
+     *
+     * @param binaryString the value as a binary string.
+     */
+    public void divide(String binaryString) {
+        this.value /= RamUtils.INSTANCE.stringToInt(binaryString);
+    }
+
+    /**
+     * Returns true if last operation overflowed.
+     *
+     * @return true if overflowed.
+     */
     public boolean isOverflow() {
         final int max = (int) Math.pow(2, Config.INSTANCE.getWordLength());
         boolean result = (value >= max || value < (-1 * max));
         return result;
     }
 
+    /**
+     * Returns true if result is negative.
+     *
+     * @return true if negative.
+     */
     public boolean isNegative() {
         return (value < 0);
     }
