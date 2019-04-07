@@ -1,11 +1,25 @@
 package com.anton.machine.commands;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+
 
 public class RamList {
     private List<RamWord> ram = new LinkedList<>();
+
+    @Getter
+    @Setter
+    private int programCounter = 0;
+
+
+
+    public void clear(){
+        ram.clear();
+        programCounter = 0;
+    }
 
     /**
      * Finds or adds the address to memory and
@@ -49,7 +63,64 @@ public class RamList {
         return ramWord.readValue();
     }
 
+    /**
+     * Test if a value from memory at an address is negative.
+     *
+     * @param addressBinary address to read from.
+     * @return isNegative at that address.
+     */
+    public boolean isNegative(String addressBinary) {
+        RamWord ramWord = findOrAdd(addressBinary);
+        ramWord.loadAddress(addressBinary);
+        return ramWord.isNegative();
+    }
+
+    /**
+     * Set a value from memory at an address to negative.
+     *
+     * @param addressBinary address to read from.
+     * @return isNegative at that address.
+     */
+    public void setNegative(String addressBinary) {
+        RamWord ramWord = findOrAdd(addressBinary);
+        ramWord.loadAddress(addressBinary);
+        ramWord.setNegative(true);
+    }
+
+    /**
+     * Test if a value from memory at an address is overflow.
+     *
+     * @param addressBinary address to read from.
+     * @return isOverflow at that address.
+     */
+    public boolean isOverflow(String addressBinary) {
+        RamWord ramWord = findOrAdd(addressBinary);
+        ramWord.loadAddress(addressBinary);
+        return ramWord.isOverflow();
+    }
+
+    /**
+     * Set a value from memory at an address to negative.
+     *
+     * @param addressBinary address to read from.
+     * @return isNegative at that address.
+     */
+    public void setOverflow(String addressBinary) {
+        RamWord ramWord = findOrAdd(addressBinary);
+        ramWord.loadAddress(addressBinary);
+        ramWord.setOverflow(true);
+    }
+
     public int getSize() {
         return this.ram.size();
+    }
+
+    public List<RamWord> getList() {
+        return this.ram;
+    }
+
+    @Override
+    public String toString() {
+        return ram.toString();
     }
 }

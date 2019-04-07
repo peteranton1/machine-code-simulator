@@ -22,61 +22,29 @@ import java.util.Map;
 public enum Memory {
     INSTANCE;
 
-    private int registerA = 0;
-    private int registerB = 0;
+    private RamList registers = new RamList();
+    private RamList ram = new RamList();
 
-    private final Map<Address, Cell> memory = new LinkedHashMap<>();
-
-    public void reset(List<Line> lines) {
-
-        int row = 0;
-        for (Address programAddress : Address.values()) {
-            Cell cell = null;
-            if (lines.size() > row) {
-                Line line = lines.get(row);
-                cell = Cell.builder()
-                        .high(line.getInstruction().getNibble())
-                        .low(line.getAddress().getNibble())
-                        .line(line)
-                        .build();
-            } else {
-                cell = Cell.builder()
-                        .high(Instruction.NOOP.getNibble())
-                        .low(Address.A0000.getNibble())
-                        .line(Line.builder()
-                                .instruction(Instruction.NOOP)
-                                .address(Address.A0000)
-                                .inputLine("Noop")
-                                .build())
-                        .build();
-            }
-            memory.put(programAddress, cell);
-            row++;
-        }
+    public void reset(List<Line> lines){
+        registers.clear();
+        ram.clear();
+        Assembler.INSTANCE.assemble(lines, registers, ram);
     }
 
     public void memory() {
-        System.out.println(formatCell("Addr", "Inst", "Arg", "Mneumonic"));
-        System.out.println(formatCell("----", "----", "----", "----"));
-        for (Address programAddress : Address.values()) {
-            show(programAddress);
+        System.out.println(formatCell("Address", "Value", "Comment"));
+        System.out.println(formatCell("--------", "--------", "-------"));
+        for (RamWord ramWord : ram.getList()) {
+            System.out.println(ramWord);
         }
-        System.out.println(formatCell("----", "----", "----", "----"));
-        System.out.println("Register A : " + registerA);
-        System.out.println("Register B : " + registerB);
-        System.out.println(formatCell("----", "----", "----", "----"));
+        System.out.println(formatCell("--------", "--------", "-------"));
+        for (RamWord ramWord : registers.getList()) {
+            System.out.println(ramWord);
+        }
+        System.out.println(formatCell("--------", "--------", "-------"));
     }
 
-    private void show(Address programAddress) {
-        Cell cell = memory.get(programAddress);
-        if (cell != null) {
-            System.out.println(formatCell(programAddress.getNibble(),
-                    cell.getHigh(), cell.getLow(),
-                    cell.getLine().getInstruction().name()));
-        }
-    }
-
-    private String formatCell(String s1, String s2, String s3, String s4) {
-        return String.format("%4s: %4s %4s ; %s", s1, s2, s3, s4);
+    private String formatCell(String s1, String s2, String s3) {
+        return String.format("%10s: %8s; %s", s1, s2, s3);
     }
 }

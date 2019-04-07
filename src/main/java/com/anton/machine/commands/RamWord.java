@@ -1,5 +1,7 @@
 package com.anton.machine.commands;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -9,25 +11,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RamWord {
 
+    @Getter
     private int address = -1;
+    @Getter
     private int value = 0;
+    @Getter
+    @Setter
+    private boolean negative = false;
+    @Getter
+    @Setter
+    private boolean overflow = false;
 
-    /**
-     * Get the value as decimal.
-     *
-     * @return decimal.
-     */
-    public int getAddress() {
-        return address;
-    }
-    /**
-     * Get the address as decimal.
-     *
-     * @return decimal.
-     */
-    public int getValue() {
-        return value;
-    }
 
     /**
      * Get the address as binary string.
@@ -119,5 +113,13 @@ public class RamWord {
      */
     public boolean isNegative() {
         return (value < 0);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%8s]:[%8s] %s",
+                RamUtils.INSTANCE.intToString(address),
+                RamUtils.INSTANCE.intToString(value),
+                "");
     }
 }

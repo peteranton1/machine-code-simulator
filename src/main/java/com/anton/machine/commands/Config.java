@@ -13,27 +13,36 @@ public enum Config {
     INSTANCE;
 
     private static final String K_WORD_LENGTH = "word-length";
+    private static final String K_WORD_MAX_VALUE = "word-max-value";
+    private static final String K_WORD_MIN_VALUE = "word-min-value";
 
     private Properties properties = new Properties();
 
     public int getWordLength() {
-        return getInt(K_WORD_LENGTH);
+        return getInt(K_WORD_LENGTH, 8);
     }
 
-    public int getInt(String key) {
-        int wordLength = 8;
-        String wordLengthString =
-                properties.getProperty(key);
+    public int getWordMaxValue() {
+        return getInt(K_WORD_MAX_VALUE, 127);
+    }
+
+    public int getWordMinValue() {
+        return getInt(K_WORD_MIN_VALUE, -128);
+    }
+
+    public int getInt(String key, int defaultValue) {
+        int value = defaultValue;
+        String valueStr = properties.getProperty(key);
         try {
-            if (null != wordLengthString) {
-                wordLength = Integer.parseInt(wordLengthString);
+            if (null != valueStr) {
+                value = Integer.parseInt(valueStr);
             }
         } catch (Throwable t) {
             log.error("Error reading property: " +
                     key +
-                    "=" + wordLengthString +
+                    "=" + valueStr +
                     ", err=" + t.toString());
         }
-        return wordLength;
+        return value;
     }
 }
