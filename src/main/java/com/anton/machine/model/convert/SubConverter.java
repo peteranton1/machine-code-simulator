@@ -8,8 +8,9 @@ import com.anton.machine.model.Instruction;
 import com.anton.machine.model.Line;
 
 public class SubConverter implements InstructionConverter {
+
     /**
-     * Convert a line into memory.
+     * Apply a line against memory.
      * Override in implementations.
      *
      * @param line      the input line.

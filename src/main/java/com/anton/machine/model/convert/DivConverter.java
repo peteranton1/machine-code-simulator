@@ -10,8 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DivConverter implements InstructionConverter {
+
     /**
-     * Convert a line into memory.
+     * Apply a line against memory.
      * Override in implementations.
      *
      * @param line      the input line.
