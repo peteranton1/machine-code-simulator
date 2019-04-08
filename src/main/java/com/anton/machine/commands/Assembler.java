@@ -11,11 +11,19 @@ import java.util.List;
 public enum Assembler {
     INSTANCE;
 
-    public void assemble(List<Line> lines, RamList registers, RamList ram){
+    public void load(List<Line> lines, RamList registers, RamList ram){
         for(Line line: lines){
             // load ram and registers using list
             // of instruction converters.
-            InstructionConverter.findAndConvert(line, registers, ram);
+            InstructionConverter.load(line, registers, ram);
+        }
+    }
+
+    public void apply(List<Line> lines, RamList registers, RamList ram){
+        for(Line line: lines){
+            // load ram and registers using list
+            // of instruction converters.
+            InstructionConverter.load(line, registers, ram);
         }
     }
 

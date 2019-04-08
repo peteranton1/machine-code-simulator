@@ -19,7 +19,7 @@ public interface InstructionConverter {
      * @param registers the registers.
      * @param ram       the ram.
      */
-    default void load(Line line, RamList registers, RamList ram){
+    static void load(Line line, RamList registers, RamList ram){
         if(line != null && line.getInstruction() != null &&
             line.getAddress() != null){
             int programCounter = ram.getProgramCounter();
@@ -48,7 +48,7 @@ public interface InstructionConverter {
      * @param registers the registers.
      * @param ram       the ram.
      */
-    static void findAndConvert(Line line, RamList registers, RamList ram) {
+    static void findAndApply(Line line, RamList registers, RamList ram) {
         Instruction
                 .getConverters()
                 .forEach(converter ->

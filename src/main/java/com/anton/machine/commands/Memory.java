@@ -22,26 +22,27 @@ import java.util.Map;
 public enum Memory {
     INSTANCE;
 
+    public static final String DASH_8 = "--------";
     private RamList registers = new RamList();
     private RamList ram = new RamList();
 
     public void reset(List<Line> lines){
         registers.clear();
         ram.clear();
-        Assembler.INSTANCE.assemble(lines, registers, ram);
+        Assembler.INSTANCE.load(lines, registers, ram);
     }
 
     public void memory() {
         System.out.println(formatCell("Address", "Value", "Comment"));
-        System.out.println(formatCell("--------", "--------", "-------"));
+        System.out.println(formatCell(DASH_8, DASH_8, DASH_8));
         for (RamWord ramWord : ram.getList()) {
             System.out.println(ramWord);
         }
-        System.out.println(formatCell("--------", "--------", "-------"));
+        System.out.println(formatCell(DASH_8, DASH_8, DASH_8));
         for (RamWord ramWord : registers.getList()) {
             System.out.println(ramWord);
         }
-        System.out.println(formatCell("--------", "--------", "-------"));
+        System.out.println(formatCell(DASH_8, DASH_8, DASH_8));
     }
 
     private String formatCell(String s1, String s2, String s3) {
