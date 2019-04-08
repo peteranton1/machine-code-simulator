@@ -29,9 +29,9 @@ public enum RamUtils {
     }
 
     /**
-     * apply binary string to int.
+     * execute binary string to int.
      *
-     * @param binaryString value to apply.
+     * @param binaryString value to execute.
      * @return the int value.
      */
     public int stringToInt(String binaryString) {

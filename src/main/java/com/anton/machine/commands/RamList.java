@@ -15,8 +15,7 @@ public class RamList {
     private int programCounter = 0;
 
 
-
-    public void clear(){
+    public void clear() {
         ram.clear();
         programCounter = 0;
     }
@@ -28,12 +27,13 @@ public class RamList {
      * @param addressBinary the memory location to find.
      * @return the memory location.
      */
-    private RamWord findOrAdd(String addressBinary) {
+    public RamWord findOrAdd(String addressBinary) {
         int address = RamUtils.INSTANCE.stringToInt(addressBinary);
         RamWord ramWord = ram.stream()
                 .filter(r -> r.getAddress() == address)
                 .findFirst().orElse(new RamWord());
         if (ramWord.getAddress() < 0) {
+            ramWord.setAddress(ram.size());
             ram.add(ramWord);
         }
         return ramWord;
@@ -44,11 +44,15 @@ public class RamList {
      *
      * @param addressBinary address to write to.
      * @param valueBinary   value to write at address.
+     * @param comment       Comment on this location.
      */
-    public void write(String addressBinary, String valueBinary) {
+    public void write(String addressBinary,
+                      String valueBinary,
+                      String comment) {
         RamWord ramWord = findOrAdd(addressBinary);
         ramWord.loadAddress(addressBinary);
         ramWord.loadValue(valueBinary);
+        ramWord.setComment(comment);
     }
 
     /**

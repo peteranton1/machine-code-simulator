@@ -4,7 +4,6 @@ import com.anton.machine.commands.Loader;
 import com.anton.machine.model.Instruction;
 import com.anton.machine.model.Line;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -25,10 +24,10 @@ public class LoaderTest {
         lines.forEach(
                 line -> {
                     System.out.println(String.format("%4s %4s %-12s %s",
-                            line.getInstruction().getNibble(),
-                            line.getAddress().getNibble(),
+                            line.getInstruction().getCode(),
+                            line.getAddress().getCode(),
                             line.getInstruction().getMneumonic(),
-                            String.format(line.getInstruction().getComment(),line.getAddress().getNibble())
+                            String.format(line.getInstruction().getComment(),line.getAddress().getCode())
                             ));
                 });
         System.out.println("--------------");
@@ -50,7 +49,7 @@ public class LoaderTest {
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < inputLines.size(); i++) {
             buf.append(String.format("%s %s %-10s %s\n",
-                    outputLines.get(i).getInstruction().getNibble(),
+                    outputLines.get(i).getInstruction().getCode(),
                     "0000",
                     outputLines.get(i).getInstruction().name(),
                     outputLines.get(i).getInstruction().getComment()
@@ -61,6 +60,6 @@ public class LoaderTest {
     }
 
     private String getInstructionString(Instruction instruction) {
-        return instruction.getNibble() + " 0000 " + instruction.name() + " " + instruction.getComment();
+        return instruction.getCode() + " 0000 " + instruction.name() + " " + instruction.getComment();
     }
 }

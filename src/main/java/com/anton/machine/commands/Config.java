@@ -15,6 +15,7 @@ public enum Config {
     private static final String K_WORD_LENGTH = "word-length";
     private static final String K_WORD_MAX_VALUE = "word-max-value";
     private static final String K_WORD_MIN_VALUE = "word-min-value";
+    private static final String K_MEM_MAX_SIZE = "mem-max-size";
 
     private Properties properties = new Properties();
 
@@ -28,6 +29,10 @@ public enum Config {
 
     public int getWordMinValue() {
         return getInt(K_WORD_MIN_VALUE, -128);
+    }
+
+    public int getMemMaxSize() {
+        return getInt(K_MEM_MAX_SIZE, 16);
     }
 
     public int getInt(String key, int defaultValue) {

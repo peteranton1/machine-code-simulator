@@ -4,8 +4,10 @@ public enum Command {
     HELP("help"),
     LOAD("load"),
     MEMORY("memory"),
+    MEM("mem"),
     NOOP("noop"),
     QUIT("quit"),
+    RESET("reset"),
     RUN("run"),
     STEP("step");
 

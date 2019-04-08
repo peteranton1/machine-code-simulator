@@ -2,24 +2,28 @@ package com.anton.machine.model.convert;
 
 import com.anton.machine.commands.RamList;
 import com.anton.machine.model.Address;
+import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
-import com.anton.machine.model.Line;
 
-public class LoadBIConverter implements  InstructionConverter{
+public class LoadBIConverter implements InstructionConverter {
 
     /**
-     * Apply a line against memory.
-     * Override in implementations.
+     * Execute a line of a program.
      *
-     * @param line      the input line.
-     * @param registers the registers.
-     * @param ram       the ram.
+     * @param instruction the input instruction.
+     * @param argument    the input argument.
+     * @param comment     the input comment.
+     * @param registers   the registers.
+     * @param ram         the ram.
      */
     @Override
-    public void apply(Line line, RamList registers, RamList ram) {
-        if(line != null && Instruction.LOAD_BI.equals(line.getInstruction())){
-            registers.write(Address.A0001.getNibble(),
-                    line.getInstruction().getNibble());
+    public void execute(Instruction instruction,
+                        Argument argument,
+                        String comment,
+                        RamList registers,
+                        RamList ram) {
+        if (Instruction.LOAD_BI.equals(instruction)) {
+            registers.write(Address.A0001.getCode(), argument.getCode(), comment);
         }
     }
 }

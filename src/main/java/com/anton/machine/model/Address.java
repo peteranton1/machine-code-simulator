@@ -26,11 +26,11 @@ public enum Address {
     A1111("1111")
     ;
     @Getter
-    private String nibble;
+    private String code;
 
-    public static Address parse(String nibble) {
+    public static Address parse(String code) {
         for (Address address : values()) {
-            if (address.getNibble().equals(nibble)) {
+            if (address.getCode().equals(code)) {
                 return address;
             }
         }

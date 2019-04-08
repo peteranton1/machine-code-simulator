@@ -21,7 +21,7 @@ public class Line {
 
     @Override
     public String toString(){
-        return instruction.getNibble() + " " + address.getNibble() +
-                String.format(instruction.getComment(),address.getNibble());
+        return instruction.getCode() + " " + address.getCode() +
+                String.format(instruction.getComment(),address.getCode());
     }
 }

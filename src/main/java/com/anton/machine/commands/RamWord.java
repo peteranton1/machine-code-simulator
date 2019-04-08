@@ -12,8 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 public class RamWord {
 
     @Getter
+    @Setter
     private int address = -1;
     @Getter
+    @Setter
     private int value = 0;
     @Getter
     @Setter
@@ -21,6 +23,9 @@ public class RamWord {
     @Getter
     @Setter
     private boolean overflow = false;
+    @Getter
+    @Setter
+    private String comment = "";
 
 
     /**
@@ -120,6 +125,6 @@ public class RamWord {
         return String.format("[%8s]:[%8s] %s",
                 RamUtils.INSTANCE.intToString(address),
                 RamUtils.INSTANCE.intToString(value),
-                "");
+                getComment());
     }
 }

@@ -1,6 +1,5 @@
 package com.anton.machine.commands;
 
-import java.io.Console;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -21,7 +20,7 @@ public enum CommandPrompt {
             if(Command.LOAD.equals(command)){
                 try {
                     // Load a mac program into memory.
-                    Memory.INSTANCE.reset(
+                    Memory.INSTANCE.resetAndLoad(
                             Loader.INSTANCE.load(
                                     getParams(command, line)));
                 } catch(Throwable e){
@@ -29,14 +28,15 @@ public enum CommandPrompt {
                 }
             } else if(Command.HELP.equals(command)){
                 Helper.INSTANCE.help();
-            } else if(Command.MEMORY.equals(command)){
-                Memory.INSTANCE.memory();
+            } else if(Command.MEMORY.equals(command)||
+                    Command.MEM.equals(command)){
+                Memory.INSTANCE.memory(getParams(command, line));
             } else if(Command.RUN.equals(command)){
-                // TODO: Implement
-                Memory.INSTANCE.memory();
+                Memory.INSTANCE.run();
+            } else if(Command.RESET.equals(command)){
+                Memory.INSTANCE.reset();
             } else if(Command.STEP.equals(command)){
-                // TODO: Implement
-                Memory.INSTANCE.memory();
+                Memory.INSTANCE.step();
             } else if(null == line || line.trim().length() == 0){
                 // Do nothing
             } else {

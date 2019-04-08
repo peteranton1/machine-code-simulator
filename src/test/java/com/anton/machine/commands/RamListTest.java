@@ -3,8 +3,6 @@ package com.anton.machine.commands;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class RamListTest {
 
     @Test
@@ -12,11 +10,12 @@ public class RamListTest {
 
         String[] addresses = {"00010001", "11111111", "00001000"};
         String valueBinary = "00010001";
+        String comment = "; test";
         RamList ramList = new RamList();
 
-        for(String address : addresses){
+        for (String address : addresses) {
             String expected = valueBinary;
-            ramList.write(address,valueBinary);
+            ramList.write(address, valueBinary, comment);
             String actual = ramList.read(address);
             Assert.assertEquals(expected, actual);
             System.out.println("Ok : " + address + ": " + actual);

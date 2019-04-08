@@ -1,12 +1,11 @@
 package com.anton.machine.model;
 
-import com.anton.machine.commands.RamList;
 import com.anton.machine.model.convert.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Enum for Machine Code Instructions.
@@ -30,37 +29,44 @@ public enum Instruction {
     JUMP_OVER("1110", "JUMP_OVER", "; Jump program if A register overflowed."),
     HALT("1111", "HALT", "; Stop program.");
 
-    @Getter
-    private static List<InstructionConverter> converters = Arrays.asList(
-            new NoopConverter(),
-            new LoadAConverter(),
-            new LoadBConverter(),
-            new StoreAConverter(),
-            new StoreBConverter(),
-            new LoadAIConverter(),
-            new LoadBIConverter(),
-            new ShiftAIConverter(),
-            new AddConverter(),
-            new SubConverter(),
-            new MultConverter(),
-            new DivConverter(),
-            new JumpConverter(),
-            new JumpNegConverter(),
-            new JumpOverConverter(),
-            new HaltConverter()
-    );
+    private static Map<Instruction, InstructionConverter> converterMap = loadMap();
+
+    public static InstructionConverter getConverter(Instruction instruction){
+        return converterMap.get(instruction);
+    }
+
+    private static Map<Instruction, InstructionConverter> loadMap() {
+        Map<Instruction, InstructionConverter> map = new HashMap<>();
+        map.put(NOOP, new NoopConverter());
+        map.put(LOAD_A, new LoadAConverter());
+        map.put(LOAD_B, new LoadBConverter());
+        map.put(STORE_A, new StoreAConverter());
+        map.put(STORE_B, new StoreBConverter());
+        map.put(LOAD_AI, new LoadAIConverter());
+        map.put(LOAD_BI, new LoadBIConverter());
+        map.put(SHIFT_AI, new ShiftAIConverter());
+        map.put(ADD, new AddConverter());
+        map.put(SUB, new SubConverter());
+        map.put(MULT, new MultConverter());
+        map.put(DIV, new DivConverter());
+        map.put(JUMP, new JumpConverter());
+        map.put(JUMP_NEG, new JumpNegConverter());
+        map.put(JUMP_OVER, new JumpOverConverter());
+        map.put(HALT, new HaltConverter());
+        return map;
+    }
 
     @Getter
-    private String nibble;
+    private String code;
     @Getter
     private String mneumonic;
     @Getter
     private String comment;
 
-    public static Instruction parse(String nibbleOrMneumonic) {
+    public static Instruction parse(String codeOrMneumonic) {
         for (Instruction instruction : values()) {
-            if (instruction.getNibble().equals(nibbleOrMneumonic) ||
-                    instruction.getMneumonic().equalsIgnoreCase(nibbleOrMneumonic) ) {
+            if (codeOrMneumonic.startsWith(instruction.getCode()) ||
+                    instruction.getMneumonic().equalsIgnoreCase(codeOrMneumonic) ) {
                 return instruction;
             }
         }

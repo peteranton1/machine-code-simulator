@@ -1,5 +1,6 @@
 package com.anton.machine.commands;
 
+import com.anton.machine.model.Instruction;
 import com.anton.machine.model.Line;
 import com.anton.machine.model.convert.InstructionConverter;
 
@@ -15,17 +16,7 @@ public enum Assembler {
         for(Line line: lines){
             // load ram and registers using list
             // of instruction converters.
-            InstructionConverter.load(line, registers, ram);
+            InstructionConverter.load(line, ram);
         }
     }
-
-    public void apply(List<Line> lines, RamList registers, RamList ram){
-        for(Line line: lines){
-            // load ram and registers using list
-            // of instruction converters.
-            InstructionConverter.load(line, registers, ram);
-        }
-    }
-
-
 }
