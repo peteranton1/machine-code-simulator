@@ -1,15 +1,4 @@
-; Example of a machine code program
-; Instructions in machine code
-0100 1010 LOAD_AI    ; Load a 4 bit value 1010 into Register A
-0011 1110 STORE_A    ; Write register A into RAM location 14
-0101 1010 SHIFT_AI   ; Shift Register A 4 bits then add another 4 bit value 1010
-0011 1111 STORE_A    ; Write register A into RAM location 15
-0010 1110 LOAD_B     ; Read RAM location 14 into Register B
-0111 0100 SUB        ; Subtract two registers, store to second register.
-1101 1000 JUMP_NEG   ; Jump program if A register negative to RAM location 8.
-1100 0101 JUMP       ; Jump program to RAM location 5.
-1111 0000 HALT       ; Stop program.
-
+;
 ; Example of a machine code program
 ; Instructions in Assembler
 LOAD_AI 1010     ; Load a 4 bit value 1010 into Register A
