@@ -39,7 +39,7 @@ public enum Memory {
                 done = true;
             }
         }
-        System.out.println("Program exist at location: " +
+        log.info("Program exist at location: " +
                 RamUtils.INSTANCE.intToString(programCounter));
         return programCounter;
     }
@@ -64,20 +64,20 @@ public enum Memory {
 
     private void printLocation(String addressStr) {
         RamWord ramWord = ram.findOrAdd(addressStr);
-        System.out.println(ramWord);
+        log.info(ramWord);
     }
 
     private void printAll() {
-        System.out.println(formatCell("Address", "Value", "Comment"));
-        System.out.println(formatCell(DASH_8, DASH_8, DASH_8));
+        log.info(formatCell("Address", "Value", "Comment"));
+        log.info(formatCell(DASH_8, DASH_8, DASH_8));
         for (RamWord ramWord : ram.getList()) {
-            System.out.println(ramWord);
+            log.info(ramWord);
         }
-        System.out.println(formatCell(DASH_8, DASH_8, DASH_8));
+        log.info(formatCell(DASH_8, DASH_8, DASH_8));
         for (RamWord ramWord : registers.getList()) {
-            System.out.println(ramWord);
+            log.info(ramWord);
         }
-        System.out.println(formatCell(DASH_8, DASH_8, DASH_8));
+        log.info(formatCell(DASH_8, DASH_8, DASH_8));
     }
 
     private String formatCell(String s1, String s2, String s3) {

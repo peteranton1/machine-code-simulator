@@ -26,6 +26,8 @@ public class AddConverter implements InstructionConverter {
                  RamList registers,
                  RamList ram){
         if (Instruction.ADD.equals(instruction)) {
+            String leftBits = argument.getCode().substring(0,2);
+            String rightBits = argument.getCode().substring(0,2);
             //read value from reg B
             String valueStrB = registers.read(Address.A0001.getCode());
             //read value from reg A
