@@ -4,9 +4,11 @@ import com.anton.machine.commands.RamList;
 import com.anton.machine.model.Address;
 import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
-import com.anton.machine.model.Line;
 
-public class StoreBConverter implements InstructionConverter {
+/**
+ * Executes SHIFT_AI instructions in machine code.
+ */
+public class ShiftAIExecutor implements InstructionExecutor {
 
     /**
      * Execute a line of a program.
@@ -23,12 +25,18 @@ public class StoreBConverter implements InstructionConverter {
                         String comment,
                         RamList registers,
                         RamList ram) {
-        if (Instruction.STORE_B.equals(instruction)) {
+        if (Instruction.SHIFT_AI.equals(instruction)) {
             // Read value from register
             String valueStr = registers.read(
-                    Address.A0001.getCode());
-            // write from register A value to ram
-            ram.write(argument.getCode(), valueStr, comment);
+                    Address.A0000.getCode());
+            if(valueStr.length()>4){
+                // shift left 5 bits
+                valueStr = valueStr.substring(4);
+                // add new value to lowest 4 bits.
+                valueStr += argument.getCode();
+            }
+            // write value to register A
+            registers.write(Address.A0000.getCode(), valueStr, comment);
         }
     }
 }

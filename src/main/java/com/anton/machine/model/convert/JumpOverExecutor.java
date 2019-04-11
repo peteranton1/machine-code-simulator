@@ -1,12 +1,17 @@
 package com.anton.machine.model.convert;
 
 import com.anton.machine.commands.RamList;
+import com.anton.machine.commands.RamUtils;
 import com.anton.machine.model.Address;
 import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
-import com.anton.machine.model.Line;
+import lombok.extern.slf4j.Slf4j;
 
-public class StoreAConverter implements InstructionConverter {
+/**
+ * Executes JUMP_OVER instructions in machine code.
+ */
+@Slf4j
+public class JumpOverExecutor implements InstructionExecutor {
 
     /**
      * Execute a line of a program.
@@ -23,12 +28,18 @@ public class StoreAConverter implements InstructionConverter {
                         String comment,
                         RamList registers,
                         RamList ram) {
-        if (Instruction.STORE_A.equals(instruction)) {
-            // Read value from register
-            String valueStr = registers.read(
-                    Address.A0000.getCode());
-            // write from register A value to ram
-            ram.write(argument.getCode(), valueStr, comment);
+        if (Instruction.ADD.equals(instruction)) {
+            // get address to jump to
+            String jumpAddressStr = instruction.getCode();
+            // convert string to int
+            int jumpAddress = RamUtils.INSTANCE.stringToInt(jumpAddressStr);
+            //read value from reg B
+
+            //Check if A negs
+            if (registers.isOverflow(Address.A0000.getCode())) {
+                //write address to program counter in ram
+                ram.setProgramCounter(jumpAddress);
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ import com.anton.machine.model.Address;
 import com.anton.machine.model.Instruction;
 import org.junit.Test;
 
-public class InstructionConverterTest {
+public class InstructionExecutorTest {
 
     @Test
     public void shouldExecuteStep() {
@@ -18,7 +18,7 @@ public class InstructionConverterTest {
         for(Instruction instruction: Instruction.values()){
             ramWord.setValue(RamUtils.INSTANCE.stringToInt(
                     instruction.getCode()+argument));
-            InstructionConverter.executeStep(ramWord,registers,ram);
+            InstructionExecutor.executeStep(ramWord,registers,ram);
         }
     }
 }

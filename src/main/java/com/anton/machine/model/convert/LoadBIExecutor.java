@@ -1,11 +1,14 @@
 package com.anton.machine.model.convert;
 
 import com.anton.machine.commands.RamList;
+import com.anton.machine.model.Address;
 import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
-import com.anton.machine.model.Line;
 
-public class HaltConverter implements  InstructionConverter{
+/**
+ * Executes LOAD_BI instructions in machine code.
+ */
+public class LoadBIExecutor implements InstructionExecutor {
 
     /**
      * Execute a line of a program.
@@ -21,10 +24,9 @@ public class HaltConverter implements  InstructionConverter{
                         Argument argument,
                         String comment,
                         RamList registers,
-                        RamList ram){
-        if (Instruction.HALT.equals(instruction)) {
-//            registers.write(Address.A0000.getCode(),
-//                    line.getInstruction().getCode());
+                        RamList ram) {
+        if (Instruction.LOAD_BI.equals(instruction)) {
+            registers.write(Address.A0001.getCode(), argument.getCode(), comment);
         }
     }
 }

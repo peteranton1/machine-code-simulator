@@ -5,7 +5,10 @@ import com.anton.machine.model.Address;
 import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
 
-public class LoadAConverter implements InstructionConverter {
+/**
+ * Executes LOAD_A instructions in machine code.
+ */
+public class LoadAExecutor implements InstructionExecutor {
 
     /**
      * Execute a line of a program.

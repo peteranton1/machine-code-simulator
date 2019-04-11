@@ -2,7 +2,7 @@ package com.anton.machine.commands;
 
 import com.anton.machine.model.Instruction;
 import com.anton.machine.model.Line;
-import com.anton.machine.model.convert.InstructionConverter;
+import com.anton.machine.model.convert.InstructionExecutor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public enum Memory {
         RamWord ramWord = ram.findOrAdd(programCounterStr);
         ram.setProgramCounter(programCounter+1);
         Instruction instruction = Instruction.parse(ramWord.readValue());
-        InstructionConverter.executeStep(ramWord,registers,ram);
+        InstructionExecutor.executeStep(ramWord,registers,ram);
         return instruction;
     }
 
@@ -64,18 +64,18 @@ public enum Memory {
 
     private void printLocation(String addressStr) {
         RamWord ramWord = ram.findOrAdd(addressStr);
-        log.info(ramWord);
+        log.info(ramWord.toString());
     }
 
     private void printAll() {
         log.info(formatCell("Address", "Value", "Comment"));
         log.info(formatCell(DASH_8, DASH_8, DASH_8));
         for (RamWord ramWord : ram.getList()) {
-            log.info(ramWord);
+            log.info(ramWord.toString());
         }
         log.info(formatCell(DASH_8, DASH_8, DASH_8));
         for (RamWord ramWord : registers.getList()) {
-            log.info(ramWord);
+            log.info(ramWord.toString());
         }
         log.info(formatCell(DASH_8, DASH_8, DASH_8));
     }

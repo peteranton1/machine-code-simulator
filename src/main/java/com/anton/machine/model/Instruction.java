@@ -29,30 +29,30 @@ public enum Instruction {
     JUMP_OVER("1110", "JUMP_OVER", "; Jump program if A register overflowed."),
     HALT("1111", "HALT", "; Stop program.");
 
-    private static Map<Instruction, InstructionConverter> converterMap = loadMap();
+    private static Map<Instruction, InstructionExecutor> converterMap = loadMap();
 
-    public static InstructionConverter getConverter(Instruction instruction){
+    public static InstructionExecutor getConverter(Instruction instruction){
         return converterMap.get(instruction);
     }
 
-    private static Map<Instruction, InstructionConverter> loadMap() {
-        Map<Instruction, InstructionConverter> map = new HashMap<>();
-        map.put(NOOP, new NoopConverter());
-        map.put(LOAD_A, new LoadAConverter());
-        map.put(LOAD_B, new LoadBConverter());
-        map.put(STORE_A, new StoreAConverter());
-        map.put(STORE_B, new StoreBConverter());
-        map.put(LOAD_AI, new LoadAIConverter());
-        map.put(LOAD_BI, new LoadBIConverter());
-        map.put(SHIFT_AI, new ShiftAIConverter());
-        map.put(ADD, new AddConverter());
-        map.put(SUB, new SubConverter());
-        map.put(MULT, new MultConverter());
-        map.put(DIV, new DivConverter());
-        map.put(JUMP, new JumpConverter());
-        map.put(JUMP_NEG, new JumpNegConverter());
-        map.put(JUMP_OVER, new JumpOverConverter());
-        map.put(HALT, new HaltConverter());
+    private static Map<Instruction, InstructionExecutor> loadMap() {
+        Map<Instruction, InstructionExecutor> map = new HashMap<>();
+        map.put(NOOP, new NoopExecutor());
+        map.put(LOAD_A, new LoadAExecutor());
+        map.put(LOAD_B, new LoadBExecutor());
+        map.put(STORE_A, new StoreAExecutor());
+        map.put(STORE_B, new StoreBExecutor());
+        map.put(LOAD_AI, new LoadAIExecutor());
+        map.put(LOAD_BI, new LoadBIExecutor());
+        map.put(SHIFT_AI, new ShiftAIExecutor());
+        map.put(ADD, new AddExecutor());
+        map.put(SUB, new SubExecutor());
+        map.put(MULT, new MultExecutor());
+        map.put(DIV, new DivExecutor());
+        map.put(JUMP, new JumpExecutor());
+        map.put(JUMP_NEG, new JumpNegExecutor());
+        map.put(JUMP_OVER, new JumpOverExecutor());
+        map.put(HALT, new HaltExecutor());
         return map;
     }
 

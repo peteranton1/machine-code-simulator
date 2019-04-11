@@ -1,14 +1,14 @@
 package com.anton.machine.model.convert;
 
 import com.anton.machine.commands.RamList;
-import com.anton.machine.commands.RamUtils;
 import com.anton.machine.model.Address;
 import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
-public class JumpOverConverter implements InstructionConverter {
+/**
+ * Executes LOAD_AI instructions in machine code.
+ */
+public class LoadAIExecutor implements InstructionExecutor {
 
     /**
      * Execute a line of a program.
@@ -25,18 +25,9 @@ public class JumpOverConverter implements InstructionConverter {
                         String comment,
                         RamList registers,
                         RamList ram) {
-        if (Instruction.ADD.equals(instruction)) {
-            // get address to jump to
-            String jumpAddressStr = instruction.getCode();
-            // convert string to int
-            int jumpAddress = RamUtils.INSTANCE.stringToInt(jumpAddressStr);
-            //read value from reg B
-
-            //Check if A negs
-            if (registers.isOverflow(Address.A0000.getCode())) {
-                //write address to program counter in ram
-                ram.setProgramCounter(jumpAddress);
-            }
+        if (Instruction.LOAD_AI.equals(instruction)) {
+            registers.write(Address.A0000.getCode(),
+                    argument.getCode(),comment);
         }
     }
 }

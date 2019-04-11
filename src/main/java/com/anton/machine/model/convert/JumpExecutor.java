@@ -2,14 +2,16 @@ package com.anton.machine.model.convert;
 
 import com.anton.machine.commands.RamList;
 import com.anton.machine.commands.RamUtils;
-import com.anton.machine.model.Address;
 import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
-import com.anton.machine.model.Line;
 import lombok.extern.slf4j.Slf4j;
 
+
+/**
+ * Executes JUMP instructions in machine code.
+ */
 @Slf4j
-public class JumpNegConverter implements InstructionConverter {
+public class JumpExecutor implements InstructionExecutor {
 
     /**
      * Execute a line of a program.
@@ -25,19 +27,14 @@ public class JumpNegConverter implements InstructionConverter {
                         Argument argument,
                         String comment,
                         RamList registers,
-                        RamList ram){
-        if (Instruction.JUMP_NEG.equals(instruction)) {
+                        RamList ram) {
+        if (Instruction.JUMP.equals(instruction)) {
             // get address to jump to
             String jumpAddressStr = instruction.getCode();
             // convert string to int
             int jumpAddress = RamUtils.INSTANCE.stringToInt(jumpAddressStr);
-            //read value from reg B
-
-            //Check if A negs
-            if(registers.isNegative(Address.A0000.getCode())) {
-                //write address to program counter in ram
-                ram.setProgramCounter(jumpAddress);
-            }
+            //write address to program counter in ram
+            ram.setProgramCounter(jumpAddress);
         }
     }
 }

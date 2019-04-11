@@ -5,7 +5,10 @@ import com.anton.machine.model.Address;
 import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
 
-public class LoadAIConverter implements InstructionConverter {
+/**
+ * Executes STORE_B instructions in machine code.
+ */
+public class StoreBExecutor implements InstructionExecutor {
 
     /**
      * Execute a line of a program.
@@ -22,9 +25,12 @@ public class LoadAIConverter implements InstructionConverter {
                         String comment,
                         RamList registers,
                         RamList ram) {
-        if (Instruction.LOAD_AI.equals(instruction)) {
-            registers.write(Address.A0000.getCode(),
-                    argument.getCode(),comment);
+        if (Instruction.STORE_B.equals(instruction)) {
+            // Read value from register
+            String valueStr = registers.read(
+                    Address.A0001.getCode());
+            // write from register A value to ram
+            ram.write(argument.getCode(), valueStr, comment);
         }
     }
 }

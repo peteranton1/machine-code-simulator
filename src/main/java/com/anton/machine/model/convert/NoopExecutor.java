@@ -1,12 +1,13 @@
 package com.anton.machine.model.convert;
 
 import com.anton.machine.commands.RamList;
-import com.anton.machine.model.Address;
 import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
-import com.anton.machine.model.Line;
 
-public class LoadBConverter implements InstructionConverter {
+/**
+ * Executes NOOP instructions in machine code.
+ */
+public class NoopExecutor implements InstructionExecutor {
 
     /**
      * Execute a line of a program.
@@ -22,12 +23,10 @@ public class LoadBConverter implements InstructionConverter {
                         Argument argument,
                         String comment,
                         RamList registers,
-                        RamList ram){
-        if (Instruction.LOAD_B.equals(instruction)) {
-            // Read value from ram
-            String valueStr = ram.read(argument.getCode());
-            // write to register A value from ram
-            registers.write(Address.A0001.getCode(), valueStr, comment);
+                        RamList ram) {
+        if (Instruction.NOOP.equals(instruction)) {
+//            registers.write(Address.A0000.getCode(),
+//                    line.getInstruction().getCode());
         }
     }
 }

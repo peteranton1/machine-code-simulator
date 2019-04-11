@@ -6,8 +6,12 @@ import com.anton.machine.commands.RamWord;
 import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
 import com.anton.machine.model.Line;
+import lombok.extern.slf4j.Slf4j;
 
-public interface InstructionConverter {
+/**
+ * Loads and executes instructions in machine code or assembler.
+ */
+public interface InstructionExecutor {
 
 
     /**
@@ -71,7 +75,7 @@ public interface InstructionConverter {
         Argument argument = new Argument(
                 codeOrMneumonic.substring(instruction.getCode().length()));
         String comment = ramWord.getComment();
-        InstructionConverter converter = Instruction.getConverter(instruction);
+        InstructionExecutor converter = Instruction.getConverter(instruction);
         System.out.println(ramWord);
         converter.execute(instruction, argument, comment, registers, ram);
         return instruction;
