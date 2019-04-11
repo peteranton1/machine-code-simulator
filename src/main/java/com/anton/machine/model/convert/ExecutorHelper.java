@@ -15,10 +15,24 @@ public enum ExecutorHelper {
     INSTANCE;
 
     public Register[] getRegisters(Argument argument) {
-        String leftBits = argument.getCode().substring(0, 2);
-        String rightBits = argument.getCode().substring(2, 4);
+        if (argument == null || argument.getCode() == null) {
+            throw new IllegalArgumentException("Bad argument to getRegisters");
+        }
+        final String REG_EXAMPLE = "00";
+        final int REG_LEN = REG_EXAMPLE.length();
+        final int NIB_LEN = (REG_LEN * 2);
+        final String nibble = REG_EXAMPLE + REG_EXAMPLE + argument.getCode();
+
+        final String leftBits = nibble
+                .substring(nibble.length() - NIB_LEN,
+                        (nibble.length() - NIB_LEN) + REG_LEN);
+
+        final String rightBits = nibble
+                .substring(nibble.length() - REG_LEN, nibble.length());
+
         log.debug("Test: getRegisters(" + argument +
                 ")=(" + leftBits + ")(" + rightBits + ")");
+
         return new Register[]{
                 Register.find(leftBits),
                 Register.find(rightBits)
