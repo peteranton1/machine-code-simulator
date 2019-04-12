@@ -10,10 +10,17 @@ import com.anton.machine.model.Argument;
 import com.anton.machine.model.Instruction;
 import com.anton.machine.model.Register;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Performs Arithmetic Logic Unit operations.
  */
 public abstract class ALUExecutor implements InstructionExecutor {
+
+    private static final List<Instruction> aluInstructions = Arrays.asList(
+        Instruction.ADD, Instruction.SUB, Instruction.MULT, Instruction.DIV
+    );
 
     abstract int performOperation(int valueLeft, int valueRight);
 
@@ -32,7 +39,7 @@ public abstract class ALUExecutor implements InstructionExecutor {
                         String comment,
                         RamList registers,
                         RamList ram) {
-        if (Instruction.ADD.equals(instruction)) {
+        if (aluInstructions.contains(instruction)) {
             Register[] fromTo = ExecutorHelper.INSTANCE.getRegisters(argument);
             //read value from reg B
             String valueLeftStr = registers.read(fromTo[0].getCode());
@@ -43,7 +50,7 @@ public abstract class ALUExecutor implements InstructionExecutor {
             //convert A to int
             int valueRight = RamUtils.INSTANCE.stringToInt(valueRightStr);
             //add B to A
-            valueRight = performOperation(valueRight, valueLeft);
+            valueRight = performOperation(valueLeft, valueRight);
             // Set flag if overflow
             if (valueRight > Config.INSTANCE.getWordMaxValue()) {
                 registers.setOverflow(fromTo[1].getCode());

@@ -30,7 +30,7 @@ public class JumpOverExecutor implements InstructionExecutor {
                         RamList ram) {
         if (Instruction.ADD.equals(instruction)) {
             // get address to jump to
-            String jumpAddressStr = instruction.getCode();
+            String jumpAddressStr = argument.getCode();
             // convert string to int
             int jumpAddress = RamUtils.INSTANCE.stringToInt(jumpAddressStr);
             //read value from reg B

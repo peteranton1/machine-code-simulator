@@ -30,8 +30,8 @@ public enum ExecutorHelper {
         final String rightBits = nibble
                 .substring(nibble.length() - REG_LEN, nibble.length());
 
-        log.debug("Test: getRegisters(" + argument +
-                ")=(" + leftBits + ")(" + rightBits + ")");
+//        log.debug("Test: getRegisters(" + argument +
+//                ")=(" + leftBits + ")(" + rightBits + ")");
 
         return new Register[]{
                 Register.find(leftBits),

@@ -115,11 +115,11 @@ public class RamList {
         ramWord.setOverflow(true);
     }
 
-    public int getSize() {
+    int getSize() {
         return this.ram.size();
     }
 
-    public List<RamWord> getList() {
+    List<RamWord> getList() {
         return this.ram;
     }
 

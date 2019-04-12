@@ -1,25 +1,27 @@
 package com.anton.machine.commands;
 
-public enum Command {
-    HELP("help"),
-    LOAD("load"),
-    MEMORY("memory"),
-    MEM("mem"),
-    NOOP("noop"),
-    QUIT("quit"),
-    RESET("reset"),
-    RUN("run"),
-    STEP("step");
+import java.util.Arrays;
+import java.util.List;
 
-    private String cmdName;
+public enum Command {
+    HELP("help", "h"),
+    LOAD("load", "l"),
+    MEMORY("memory", "m", "mem"),
+    NOOP("noop"),
+    QUIT("quit", "q", "x", "wq", "exit"),
+    RESET("reset"),
+    RUN("run", "r"),
+    STEP("step", "s");
+
+    private List<String> cmdNames;
 
     /**
      * Constructor.
      *
      * @param cmdName the command.
      */
-    Command(String cmdName) {
-        this.cmdName = cmdName;
+    Command(String... cmdNames) {
+        this.cmdNames = Arrays.asList(cmdNames);
     }
 
     /**
@@ -28,17 +30,19 @@ public enum Command {
      * @return the value of cmdName.
      */
     public String getCmdName() {
-        return this.cmdName;
+        return this.cmdNames.get(0);
     }
 
-    public static Command find(String line){
-        if(line == null){
+    public static Command find(String line) {
+        if (line == null) {
             return NOOP;
         }
         String tempLine = line.toLowerCase().trim();
-        for(Command command: values()){
-            if(tempLine.startsWith(command.getCmdName())){
-                return command;
+        for (Command command : values()) {
+            for (String cmdName : command.cmdNames) {
+                if (tempLine.startsWith(cmdName)) {
+                    return command;
+                }
             }
         }
         return NOOP;
