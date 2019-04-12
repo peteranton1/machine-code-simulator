@@ -41,6 +41,8 @@ public abstract class ALUExecutor implements InstructionExecutor {
                         RamList ram) {
         if (aluInstructions.contains(instruction)) {
             Register[] fromTo = ExecutorHelper.INSTANCE.getRegisters(argument);
+            registers.setOverflow(fromTo[1].getCode(),false);
+            registers.setNegative(fromTo[1].getCode(), false);
             //read value from reg B
             String valueLeftStr = registers.read(fromTo[0].getCode());
             //read value from reg A
@@ -53,7 +55,9 @@ public abstract class ALUExecutor implements InstructionExecutor {
             valueRight = performOperation(valueLeft, valueRight);
             // Set flag if overflow
             if (valueRight > Config.INSTANCE.getWordMaxValue()) {
-                registers.setOverflow(fromTo[1].getCode());
+                registers.setOverflow(fromTo[1].getCode(), true);
+            } else if(valueRight < 0){
+                registers.setNegative(fromTo[1].getCode(), true);
             }
             //convert value A into string
             valueRightStr = RamUtils.INSTANCE.intToString(valueRight);

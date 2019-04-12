@@ -19,6 +19,7 @@ public enum Memory {
     INSTANCE;
 
     public static final String DASH_8 = "--------";
+    public static final String ONE = "1";
     private RamList registers = new RamList();
     private RamList ram = new RamList();
 
@@ -61,7 +62,7 @@ public enum Memory {
         while (!done) {
             programCounter = ram.getProgramCounter();
             if (programCounter > Config.INSTANCE.getMemMaxSize() ||
-                    Instruction.HALT.equals(step())) {
+                    Instruction.HALT.equals(step(ONE))) {
                 done = true;
             }
         }
@@ -70,13 +71,21 @@ public enum Memory {
         return programCounter;
     }
 
-    public Instruction step() {
-        int programCounter = ram.getProgramCounter();
-        String programCounterStr = RamUtils.INSTANCE.intToString(programCounter);
-        RamWord ramWord = ram.findOrAdd(programCounterStr);
-        ram.setProgramCounter(programCounter + 1);
-        Instruction instruction = Instruction.parse(ramWord.readValue());
-        InstructionExecutor.executeStep(ramWord, registers, ram);
+    public Instruction step(String params) {
+        String trim = ofNullable(params).map(String::trim).orElse(ONE);
+        int stepsCounter = 1;
+        if (trim.length() > 0 ) {
+            stepsCounter = Integer.parseInt(trim);
+        }
+        Instruction instruction = Instruction.HALT;
+        for(int i=0; i< stepsCounter; i++) {
+            int programCounter = ram.getProgramCounter();
+            String programCounterStr = RamUtils.INSTANCE.intToString(programCounter);
+            RamWord ramWord = ram.findOrAdd(programCounterStr);
+            ram.setProgramCounter(programCounter + 1);
+            instruction = Instruction.parse(ramWord.readValue());
+            InstructionExecutor.executeStep(ramWord, registers, ram);
+        }
         return instruction;
     }
 
@@ -129,6 +138,6 @@ public enum Memory {
     }
 
     private String formatCell(String s1, String s2, String s3) {
-        return String.format("%10s: %8s; %s", s1, s2, s3);
+        return String.format("%15s: %8s; %s", s1, s2, s3);
     }
 }

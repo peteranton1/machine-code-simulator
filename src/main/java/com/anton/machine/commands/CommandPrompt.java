@@ -36,7 +36,6 @@ public enum CommandPrompt {
             } else if (Command.HELP.equals(command)) {
                 Helper.INSTANCE.help();
             } else if (Command.MEMORY.equals(command)) {
-                // Display memory.
                 if(args.length < 2){
                     Memory.INSTANCE.memory();
                 }else {
@@ -48,7 +47,11 @@ public enum CommandPrompt {
             } else if (Command.RESET.equals(command)) {
                 Memory.INSTANCE.reset();
             } else if (Command.STEP.equals(command)) {
-                Memory.INSTANCE.step();
+                if(args.length < 2){
+                    Memory.INSTANCE.step("1");
+                }else {
+                    Memory.INSTANCE.step(args[1]);
+                }
             } else if (null == line || line.trim().length() == 0 ||
                     Command.QUIT.equals(command)) {
                 // Do nothing

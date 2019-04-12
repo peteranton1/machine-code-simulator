@@ -39,7 +39,7 @@ public class MemoryTest {
         Memory.INSTANCE.resetAndLoad(Loader.INSTANCE.load(TESTPROG_1));
         Assert.assertThat(Memory.INSTANCE.ramSize(),is(9));
         Assert.assertThat(Memory.INSTANCE.registersSize(),is(0));
-        Instruction instruction = Memory.INSTANCE.step();
+        Instruction instruction = Memory.INSTANCE.step("1");
         Assert.assertThat(instruction,is(Instruction.LOAD_AI));
         Assert.assertThat(Memory.INSTANCE.getProgramCounter(),is(1));
     }

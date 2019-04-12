@@ -83,12 +83,13 @@ public class RamList {
      * Set a value from memory at an address to negative.
      *
      * @param addressBinary address to read from.
+     * @param flagValue value to set flag.
      * @return isNegative at that address.
      */
-    public void setNegative(String addressBinary) {
+    public void setNegative(String addressBinary, boolean flagValue) {
         RamWord ramWord = findOrAdd(addressBinary);
         ramWord.loadAddress(addressBinary);
-        ramWord.setNegative(true);
+        ramWord.setNegative(flagValue);
     }
 
     /**
@@ -107,12 +108,13 @@ public class RamList {
      * Set a value from memory at an address to negative.
      *
      * @param addressBinary address to read from.
+     * @param flagValue value to set flag.
      * @return isNegative at that address.
      */
-    public void setOverflow(String addressBinary) {
+    public void setOverflow(String addressBinary, boolean flagValue) {
         RamWord ramWord = findOrAdd(addressBinary);
         ramWord.loadAddress(addressBinary);
-        ramWord.setOverflow(true);
+        ramWord.setOverflow(flagValue);
     }
 
     int getSize() {

@@ -28,7 +28,7 @@ public enum Helper {
                 "    load <filename>     - Load a file containing machine instructions.\n" +
                 "    memory [<bits>]     - Show the memory, all, or specific loc or reg. \n" +
                 "    run                 - Run the loaded program. \n" +
-                "    step                - Step through the program one line at a time\n";
+                "    step [n]            - Step [n] steps through program, defaults to 1 step\n";
         log.info(help);
     }
 
