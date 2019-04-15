@@ -22,6 +22,7 @@ public enum Memory {
     public static final String ONE = "1";
     private RamList registers = new RamList();
     private RamList ram = new RamList();
+    private boolean haltExecuted = false;
 
     public int ramSize() {
         return ram.getSize();
@@ -34,7 +35,7 @@ public enum Memory {
     public void resetAndLoad(List<Line> lines) {
         reset();
         Assembler.INSTANCE.load(lines, registers, ram);
-        ram.setProgramCounter(0);
+        resetProgramCounter();
     }
 
     public void setProgramCounter(int programCounter) {
@@ -50,6 +51,7 @@ public enum Memory {
     }
 
     public void reset() {
+        haltExecuted = false;
         registers.clear();
         ram.clear();
         resetProgramCounter();
@@ -60,15 +62,22 @@ public enum Memory {
         boolean done = false;
         int programCounter = ram.getProgramCounter();
         while (!done) {
+            Instruction currentInstruction = step(ONE);
             programCounter = ram.getProgramCounter();
-            if (programCounter > Config.INSTANCE.getMemMaxSize() ||
-                    Instruction.HALT.equals(step(ONE))) {
+            if (isEndOfProgram(programCounter, currentInstruction)) {
                 done = true;
+                haltExecuted = true;
             }
         }
         log.info("Program exit at location: " +
                 RamUtils.INSTANCE.intToString(programCounter));
         return programCounter;
+    }
+
+    private boolean isEndOfProgram(int programCounter, Instruction currentInstruction) {
+        return programCounter > Config.INSTANCE.getMemMaxSize() ||
+                Instruction.HALT.equals(currentInstruction) ||
+                Instruction.NOOP.equals(currentInstruction);
     }
 
     public Instruction step(String params) {
@@ -78,13 +87,17 @@ public enum Memory {
             stepsCounter = Integer.parseInt(trim);
         }
         Instruction instruction = Instruction.HALT;
-        for(int i=0; i< stepsCounter; i++) {
-            int programCounter = ram.getProgramCounter();
-            String programCounterStr = RamUtils.INSTANCE.intToString(programCounter);
-            RamWord ramWord = ram.findOrAdd(programCounterStr);
-            ram.setProgramCounter(programCounter + 1);
-            instruction = Instruction.parse(ramWord.readValue());
-            InstructionExecutor.executeStep(ramWord, registers, ram);
+        if(!haltExecuted) {
+            for (int i = 0; i < stepsCounter; i++) {
+                int programCounter = ram.getProgramCounter();
+                String programCounterStr = RamUtils.INSTANCE.intToString(programCounter);
+                RamWord ramWord = ram.findOrAdd(programCounterStr);
+                ram.setProgramCounter(programCounter + 1);
+                instruction = Instruction.parse(ramWord.readValue());
+                InstructionExecutor.executeStep(ramWord, registers, ram);
+            }
+        } else {
+            printProgramCounter();
         }
         return instruction;
     }
