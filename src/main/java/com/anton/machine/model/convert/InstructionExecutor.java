@@ -69,7 +69,7 @@ public interface InstructionExecutor {
         if (Instruction.NOOP.equals(instruction) ||
                 Instruction.HALT.equals(instruction) ||
                 codeOrMneumonic.length() <= instruction.getCode().length()) {
-            System.out.println("Not executing: " + instruction);
+            System.out.println(ramWord);
             return instruction;
         }
         Argument argument = new Argument(

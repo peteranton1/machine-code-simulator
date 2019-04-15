@@ -1,0 +1,12 @@
+;
+; Example of a machine code program
+; Instructions in Assembler
+LOAD_AI 1010     ; Load a 4 bit value 1010 into Register A
+STORE_A 1110     ; Write register A into RAM location 14
+SHIFT_AI 1010    ; Shift Register A 4 bits then add another 4 bit value 1010
+STORE_A 1111     ; Write register A into RAM location 15
+LOAD_B 1110      ; Read RAM location 14 into Register B
+SUB 0100         ; Subtract two registers, store to second register.
+JUMP_NEG 1000    ; Jump program if A register negative to RAM location 8.
+JUMP 0101        ; Jump program to RAM location 5.
+HALT 0000        ; Stop program.
