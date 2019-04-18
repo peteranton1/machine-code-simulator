@@ -77,24 +77,47 @@ public enum Memory {
     }
 
     public Instruction step(String params) {
-        String trim = ofNullable(params).map(String::trim).orElse(ONE);
-        int stepsCounter = 1;
-        if (trim.length() > 0) {
-            stepsCounter = Integer.parseInt(trim);
-        }
+        int stepsCounter = getStepsCounter(params);
         Instruction instruction = Instruction.HALT;
+        checkHaltExecutedFlag();
         for (int i = 0; i < stepsCounter && !haltExecuted; i++) {
             int programCounter = ram.getProgramCounter();
-            String programCounterStr = RamUtils.INSTANCE.intToString(programCounter);
-            RamWord ramWord = ram.findOrAdd(programCounterStr);
-            ram.setProgramCounter(programCounter + 1);
+            RamWord ramWord = nextInstruction(programCounter);
             instruction = Instruction.parse(ramWord.readValue());
             InstructionExecutor.executeStep(ramWord, registers, ram);
-            if (isEndOfProgram(programCounter, instruction)) {
+            if (isEndOfProgram(ram.getProgramCounter(), instruction)) {
                 haltExecuted = true;
             }
         }
         return instruction;
+    }
+
+    private RamWord nextInstruction(int programCounter) {
+        ram.setProgramCounter(programCounter + 1);
+        String programCounterStr = RamUtils.INSTANCE.intToString(programCounter);
+        return ram.findOrAdd(programCounterStr);
+    }
+
+    private void checkHaltExecutedFlag() {
+        if(haltExecuted && ram.getProgramCounter() == 0){
+            haltExecuted = false;
+        }
+    }
+
+    private int getStepsCounter(String params) {
+        int stepsCounter = 1;
+        String p1 = ofNullable(params).map(String::trim).orElse(ONE);
+        if (p1.length() > 0) {
+            stepsCounter = checkStepCounter(Integer.parseInt(p1));
+        }
+        return stepsCounter;
+    }
+
+    private int checkStepCounter(int stepsCounter) {
+        if (stepsCounter < 1){
+            stepsCounter = 1;
+        }
+        return stepsCounter;
     }
 
 

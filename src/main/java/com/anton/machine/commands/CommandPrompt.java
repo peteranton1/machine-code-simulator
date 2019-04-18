@@ -48,7 +48,7 @@ public enum CommandPrompt {
                 Memory.INSTANCE.reset();
             } else if (Command.STEP.equals(command)) {
                 if(args.length < 2){
-                    Memory.INSTANCE.step("1");
+                    Memory.INSTANCE.step(Memory.ONE);
                 }else {
                     Memory.INSTANCE.step(args[1]);
                 }

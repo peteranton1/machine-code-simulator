@@ -29,8 +29,10 @@ public class StoreAExecutor implements InstructionExecutor {
             // Read value from register
             String valueStr = registers.read(
                     Address.A0000.getCode());
+            String comment1 = String.format(
+                    "Value %s", valueStr);
             // write from register A value to ram
-            ram.write(argument.getCode(), valueStr, comment);
+            ram.write(argument.getCode(), valueStr, comment1);
         }
     }
 }
