@@ -74,6 +74,7 @@
                             <mainClass>com.anton.machine.MCS</mainClass>
                         </manifest>
                     </archive>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
             </plugin>
         </plugins>
