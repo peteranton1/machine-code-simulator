@@ -13,7 +13,7 @@ public class MCS {
         System.out.println("Machine Code Simulator 1.0");
         if(args.length>0){
             Memory.INSTANCE.resetAndLoad(Loader.INSTANCE.load(args[0]));
-            Memory.INSTANCE.memory("");
+            Memory.INSTANCE.memory();
         }else{
             Helper.INSTANCE.help();
             // load src/test/resources/testprog1.mac

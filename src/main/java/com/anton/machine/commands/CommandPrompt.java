@@ -37,9 +37,9 @@ public enum CommandPrompt {
                 Helper.INSTANCE.help();
             } else if (Command.MEMORY.equals(command)) {
                 if(args.length < 2){
-                    Memory.INSTANCE.memory();
-                }else {
-                    Memory.INSTANCE.memory(args[1]);
+                    Memory.INSTANCE.memory(new String[]{""});
+                }else{
+                    Memory.INSTANCE.memory(args);
                 }
             } else if (Command.RUN.equals(command)) {
                 int rows = Memory.INSTANCE.run();

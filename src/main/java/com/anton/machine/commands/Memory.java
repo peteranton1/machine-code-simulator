@@ -6,6 +6,7 @@ import com.anton.machine.model.Register;
 import com.anton.machine.model.convert.InstructionExecutor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,28 +97,73 @@ public enum Memory {
         return instruction;
     }
 
+
+    /**
+     * Display all memory locations.
+     */
     public void memory() {
-        memory(null);
+        memory(new String[]{""});
     }
 
-    public void memory(String params) {
-        String trim = ofNullable(params).map(String::trim).orElse("");
-        if (trim.length() > 0 && trim.length() < 4) {
-            if (trim.charAt(0) == 'p') {
+    /**
+     * Display (and set) a memory location or locations.
+     *
+     * @param args args[1] location, [args[2] value to set].
+     */
+    public void memory(String[] args) {
+        log.debug("Args: " + Arrays.toString(args));
+        String p1 = "";
+        if(args.length>1){
+            p1 = ofNullable(args[1]).map(String::trim).orElse("");
+        }
+        String p2 = "";
+        int p2Int = 0;
+        boolean p2Available = false;
+        if(args.length>2){
+            p2 = ofNullable(args[2]).map(String::trim).orElse("");
+            if(p2.length()>0) {
+                p2Int = Integer.parseInt(p2);
+                p2Available = true;
+            }
+        }
+
+        if (p1.length() > 0 && p1.length() < 4) {
+            if (p1.charAt(0) == 'p') {
+                if(p2Available){
+                    setProgramCounter(p2Int);
+                }
                 printProgramCounter();
             } else {
-                printRegister(Register.find(trim).getCode());
+                final String addressStr = Register.find(p1).getCode();
+                if(p2Available){
+                    loadRegister(addressStr, p2Int);
+                }
+                printRegister(addressStr);
             }
-        } else if (trim.length() >= 4) {
-            printLocation(params.substring(0, 4));
+        } else if (p1.length() >= 4) {
+            final String addressStr = args[1].substring(0, 4);
+            if(p2Available){
+                loadLocation(addressStr, p2Int);
+            }
+            printLocation(addressStr);
         } else {
             printAll();
         }
     }
 
+    private void loadLocation(String addressStr, int value) {
+        RamWord ramWord = ram.findOrAdd(addressStr);
+        ramWord.setValue(value);
+    }
+
     private void printLocation(String addressStr) {
         RamWord ramWord = ram.findOrAdd(addressStr);
         log.info("Loc: " + ramWord.toString());
+    }
+
+    private void loadRegister(String addressStr, int value) {
+        RamWord ramWord = registers.findOrAdd(addressStr);
+        ramWord.setValue(value);
     }
 
     private void printRegister(String addressStr) {
