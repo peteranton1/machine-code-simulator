@@ -45,11 +45,13 @@ public enum Loader {
                 inputLine.trim().charAt(0) == ';') {
             return null;
         }
-        String[] tokens = inputLine.split(" ");
-        if (tokens.length >= 2) {
+        List<String> tokens = StringUtils.splitter(inputLine);
+        tokens = StringUtils.removeComments(tokens);
+
+        if (tokens.size() >= 2) {
             return Line.builder()
-                    .instruction(Instruction.parse(tokens[0]))
-                    .address(Address.parse(tokens[1]))
+                    .instruction(Instruction.parse(tokens.get(0)))
+                    .address(Address.parse(tokens.get(1)))
                     .inputLine(inputLine)
                     .build();
         } else {
