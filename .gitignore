@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# nohup.out from nohup
+*.out
+
 # Log file
 *.log
 
